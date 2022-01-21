@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const createUserToken = require('../helpers/createUserToken');
 
 module.exports = class UserController {
   static createUser = async (req, res) => {
@@ -36,21 +37,21 @@ module.exports = class UserController {
     const salt = await bcrypt.genSalt(12);
     const passwordHash = await bcrypt.hash(password, salt);
 
-    //creat a user
-    // const user = new User({
-    //   name,
-    //   email,
-    //   phone,
-    //   password: passwordHash
-    // });
+    // creat a user
+    const user = new User({
+      name,
+      email,
+      phone,
+      password: passwordHash
+    });
 
     try {
       
-      // const newUser = await user.save();
+      const newUser = await user.save();
       // da pra criar usuário assim também
-      await User.create({ name, email, phone, password: passwordHash })
+      //await User.create({ name, email, phone, password: passwordHash })
 
-      return res.status(201).json({ message: "Usuário criado com sucesso!" });
+      await createUserToken(newUser, req, res); //criando nosso JWT
     } catch (error) {
       res.status(500).json({message: error})
     }
