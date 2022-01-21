@@ -56,4 +56,31 @@ module.exports = class UserController {
       res.status(500).json({message: error})
     }
   }
+
+  static loginUser = async (req, res) => {
+    const { email, password } = req.body;
+
+    if(!email) {
+      return res.status(422).json({message: "o email é obrigatório!"});
+    }
+    if(!password) {
+      return res.status(422).json({message: "a senha é obrigatória!"});
+    }
+
+    const user = await User.findOne({email: email});
+
+    if(!user) {
+      return res.status(422).json({message: "Não existe usuário com esse email!"});
+    }
+
+    //check if password match
+    const passwordsMatch = await bcrypt.compare(password, user.password);
+    
+    if (!passwordsMatch) {
+      return res.status(422).json({message: "senha inválida!"});
+    }
+
+    return await createUserToken(user, req, res);
+  }
+  
 }

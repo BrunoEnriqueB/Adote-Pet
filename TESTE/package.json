@@ -1,18 +1,15 @@
 {
-  "name": "backend",
+  "name": "teste",
   "version": "1.0.0",
-  "description": "\"BackEnd do Projeto Get a Pet\"",
+  "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon ./index.js localhost 5000"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/BrunoEnriqueB"
-  },
-  "author": "Bruno Enrique",
-  "license": "MIT",
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.6",
