@@ -1,3 +1,4 @@
+const res = require("express/lib/response");
 
 
 module.exports = getToken = (req) => {

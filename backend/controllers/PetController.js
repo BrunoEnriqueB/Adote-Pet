@@ -2,6 +2,7 @@ const Pet = require('../models/Pet');
 //middlewares
 const getUserByToken = require('../helpers/getUserByToken');
 const getToken = require('../helpers/gettoken');
+const mongoose = require('mongoose')
 
 module.exports = class PetController {
   static async createPet(req, res) {
@@ -55,5 +56,33 @@ module.exports = class PetController {
     } catch (error) {
       return res.status(500).json({message: error})
     }
+  }
+
+  static async getAll(req, res) {
+    const pets = await Pet.find().sort('+createdAt');
+
+    res.status(200).json(pets)
+  } 
+
+  static async getMyPets(req, res) {
+    const token = await getToken(req);
+    const user = await getUserByToken(token);
+    
+    const userId = mongoose.Types.ObjectId(user._id).toString();
+
+    const pets = await Pet.find({'user._id': userId});
+
+    return res.status(200).json({pets,})
+
+
+  }
+
+  static async getMyAllAdoptedPets(req, res) {
+    const token = await getToken(req);
+    const user = await getUserByToken(token);
+     
+    const pets = await Pet.find({'adopter._id': user._id});
+
+    return res.status(200).json({pets})
   }
 }
