@@ -7,14 +7,14 @@ const imageStorage = multer.diskStorage({
     let folder = "";
     if(req.baseUrl.includes('user')) { //verifica de qual categoria é a imagem
       folder = 'users';
-    } else if (req.baseUrl.includes('pets')) {
+    } else if (req.baseUrl.includes('pet')) {
       folder = 'pets';
     }
 
     cb(null, `public/images/${folder}`);
   }, //destino q vai ser salvo
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname)); // adiciona a hora que a imagem foi adicionada no nome da imagem
+    cb(null, Date.now() + String(Math.floor(Math.random() * 1000)) + path.extname(file.originalname)); // adiciona a hora que a imagem foi adicionada no nome da imagem
   }, //nome do arquivo
 })
 
