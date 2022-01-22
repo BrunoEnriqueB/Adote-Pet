@@ -146,23 +146,36 @@ module.exports = class UserController {
       const userExists = await User.findOne({email: email});
       //check if email doesn't already exists in DB
       if (userExists && id !== userExists.id) {
-        return res.status(422).json({ message: "esse email já pertence a outro usuário!" })
+        return res.status(422).json({ message: "esse email já pertence a outro usuário!" });
       }
     }
     user.email = email;
-    if (!password) {
-      return res.status(422).json({ message: "Senha obrigatória!" });
-    }
-    if (!confirmpassword) {
-      return res.status(422).json({ message: "confirmação de senha obrigatório!" });
-    }
     if (!phone) {
       return res.status(422).json({ message: "Número de telefone obrigatório!" });
     }
     user.phone = phone;
     if (password !== confirmpassword) {
       return res.status(422).json({ message: "Senhas incompátiveis!" });
+    } else if (password === confirmpassword && password != null) {
+      //creating password
+      const salt = await bcrypt.genSalt(12);
+      const hashPassword = await bcrypt.hash(password, salt)
+      user.password = hashPassword
     }
-    user.password = password
+
+    try {
+      
+      //returns user updated data
+      await User.findOneAndUpdate(
+        {_id: user.id}, // passamos qual usuário vamos atualizar
+        { $set: user }, // passa quais os dados vamos atualizar
+        { new: true } // atualizar o updatedAt
+      )
+      
+      res.status(200).json({message: "Usuário atualizado com sucesso!"})
+    } catch (error) {
+      req.status(500).json({message: error})
+      return
+    }
   }
 }
