@@ -195,7 +195,6 @@ module.exports = class PetController {
     if(!pet) {
       return res.status(404).json({message: "Não encontrado!"});
     }
-
     const token = await getToken(req);
     const user = await getUserByToken(token);
     // check if user adopter is the user owner
@@ -222,5 +221,30 @@ module.exports = class PetController {
     return res.status(200).json({
       message: `A mensagem foi agendada com sucesso!, entre em contado com ${pet.user.name} pelo telefone ${pet.user.phone}`
     });
+  }
+
+  static async concludeAdoption(req, res) {
+    const id = req.params.id;
+    
+    if(!ObjectId.isValid(id)) {
+      return res.status(422).json({message: "Id inválido!"});
+    }
+
+    const pet = await Pet.findById(id);
+    if(!pet) {
+      return res.status(404).json({message: "Não encontrado!"});
+    }
+
+    const token = await getToken(req);
+    const user = await getUserByToken(token);
+    // check if user adopter is the user owner
+    if(pet.user._id.toString() !== user._id.toString()) {
+      return res.status(422).json({message: "Você não pode confirmar a adoção deste pet!"});
+    }
+
+    pet.available = false;
+
+    await Pet.findByIdAndUpdate(id, pet);
+    return res.status(200).json({message: "Parabéns! O ciclo de adoção foi completado!"});
   }
 }

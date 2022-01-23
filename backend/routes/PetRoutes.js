@@ -8,6 +8,7 @@ const { imageUpload } = require('../helpers/uploadimage');
 router.get('/mypets', verifyToken, PetController.getMyPets);
 router.get('/adoptedpets', verifyToken, PetController.getMyAllAdoptedPets);
 router.patch('/schedule/:id', verifyToken, PetController.schedule);
+router.patch('/conclude/:id', verifyToken, PetController.concludeAdoption);
 router.patch('/:id', verifyToken, imageUpload.array('image'), PetController.updatePetById);
 router.delete('/:id', verifyToken, PetController.removePetById);
 router.get('/:id', PetController.getPetById);
