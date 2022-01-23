@@ -4,6 +4,7 @@ const Pet = require('../models/Pet');
 const getUserByToken = require('../helpers/getUserByToken');
 const getToken = require('../helpers/gettoken');
 const ObjectId = require('mongoose').Types.ObjectId;
+const { update } = require('../models/Pet');
 
 module.exports = class PetController {
   static async createPet(req, res) {
@@ -18,7 +19,7 @@ module.exports = class PetController {
       return res.status(422).json({message: "informe a idade do pet!"});  
     }
     if(!weight) {
-      return res.status(422).json({message: "informe o pesodo pet!"});  
+      return res.status(422).json({message: "informe o peso do pet!"});  
     }
     if(!color) {
       return res.status(422).json({message: "informe a cor do pet!"});  
@@ -122,5 +123,64 @@ module.exports = class PetController {
 
     await Pet.findByIdAndRemove(id);
     return res.status(200).json({message: "Pet deletado com sucesso!"});
+  }
+
+  static async updatePetById(req, res) {
+    const id = req.params.id;
+    //check if id is valid
+    if(!ObjectId.isValid(id)) {
+      return res.status(422).json({message: "Id inválido!"});
+    }
+    
+    const pet = await Pet.findById(id);
+    if(!pet) {
+      return res.status(404).json({message: "Não encontrado!"});
+    }
+
+    const token = await getToken(req);
+    const user = await getUserByToken(token);
+
+    if(user._id.toString() !== pet.user._id.toString()) {
+      return res.status(422).json({message: "Não autorizado!"});
+    }
+
+    const { name, age, weight, color, available } = req.body;
+
+    const image = req.files
+
+    let updatedData = {};
+
+    if(!name) {
+      return res.status(422).json({message: "informe o nome do pet!"});  
+    }
+    updatedData.name = name;
+    if(!age) {
+      return res.status(422).json({message: "informe a idade do pet!"});  
+    }
+    updatedData.age = age;
+    if(!weight) {
+      return res.status(422).json({message: "informe o peso do pet!"});  
+    }
+    updatedData.weight = age;
+    if(!color) {
+      return res.status(422).json({message: "informe a cor do pet!"});  
+    }
+    updatedData.color = color;
+    if(image.length === 0) {
+      return res.status(422).json({message: "as imagens do pet são obrigatórias!"});  
+    } else {
+      updatedData.image = [];
+      image.map((image) => {
+        updatedData.image.push(image.filename);
+      });
+    }
+
+    if(pet.adopter) {
+      return res.status(422).json({message: "Você não pode editar esse pet, pois ele já foi adotado!"});  
+    }
+
+    await Pet.findByIdAndUpdate(id, updatedData);
+
+    res.status(200).json({message: "Pet atualizado com sucesso!"})
   }
 }
