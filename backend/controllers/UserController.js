@@ -125,11 +125,11 @@ module.exports = class UserController {
     const user = await getUserByToken(token);
 
     if (id !== user.id) {
-      res.status(401).json({ message: "Sem autorização!" });
+      return res.status(401).json({ message: "Sem autorização!" });
     }
     //check if user exists
     if (!user) {
-      res.status(422).json({ message: "Usuário não encontrado!" });
+      return res.status(422).json({ message: "Usuário não encontrado!" });
     }
 
     const { name, email, phone, password, confirmpassword } = req.body;
