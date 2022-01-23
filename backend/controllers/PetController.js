@@ -1,8 +1,9 @@
 const Pet = require('../models/Pet');
+
 //middlewares
 const getUserByToken = require('../helpers/getUserByToken');
 const getToken = require('../helpers/gettoken');
-const mongoose = require('mongoose')
+const ObjectId = require('mongoose').Types.ObjectId;
 
 module.exports = class PetController {
   static async createPet(req, res) {
@@ -68,7 +69,7 @@ module.exports = class PetController {
     const token = await getToken(req);
     const user = await getUserByToken(token);
     
-    const userId = mongoose.Types.ObjectId(user._id).toString();
+    const userId = ObjectId(user._id).toString();
 
     const pets = await Pet.find({'user._id': userId});
 
@@ -84,5 +85,42 @@ module.exports = class PetController {
     const pets = await Pet.find({'adopter._id': user._id});
 
     return res.status(200).json({pets})
+  }
+
+  static async getPetById(req, res) {
+    const id = req.params.id;
+
+    if(!ObjectId.isValid(id)) {
+      return res.status(422).json({message: "Id inválido!"});
+    }
+    const pet = await Pet.findById(id);
+    if(!pet) {
+      return res.status(404).json({message: "Não encontrado!"});
+    }
+
+    return res.status(201).json(pet);
+  }
+
+  static async removePetById(req, res) {
+    const id = await req.params.id;
+    //check if id is valid
+    if(!ObjectId.isValid(id)) {
+      return res.status(422).json({message: "Id inválido!"});
+    }
+    //check if pet exist
+    const pet = await Pet.findById(id);
+    if(!pet) {
+      return res.status(404).json({message: "Não encontrado!"});
+    }
+    
+    const token = await getToken(req);
+    const user = await getUserByToken(token);
+    // check if logged in user registered the pet
+    if(pet.user._id.toString() !== user._id.toString()) {
+      return res.status(422).json({message: "Não autorizado!"});
+    }
+
+    await Pet.findByIdAndRemove(id);
+    return res.status(200).json({message: "Pet deletado com sucesso!"});
   }
 }
