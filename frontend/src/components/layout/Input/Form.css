@@ -5,6 +5,10 @@
   border-radius: 15px;
 }
 
+.form-container h1 {
+  margin-bottom: 1em;
+}
+
 .form-container input[type='submit'] {
   border-radius: 8px;
   background-color: #25B456;
