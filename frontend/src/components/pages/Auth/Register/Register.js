@@ -1,15 +1,31 @@
-import Input from "../../../layout/Input/Input";
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+
+// Componentes
+import Input from "../../../layout/Input/Input";
+
+// CSS
 import '../../../layout/Input/Form.css';
 import './Register.css';
 
 export default function Register() {
-  function handleChange(e) {}
+  const [ user, setUser ] = useState({});
+
+  function handleChange(e) {
+    setUser({...user, [e.target.name]: e.target.value})
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    //enviar usuário para o banco
+    console.log(user)
+  }
 
   return (
-    <section>
+    <section className="form-container">
       <h1>Registrar</h1>
-      <form action="" method="POST" className="form-container">
+      <form onSubmit={handleSubmit} >
         <Input
           text="Nome"
           type="text"
@@ -22,24 +38,28 @@ export default function Register() {
           type="text"
           name="phone"
           placeholder="Digite o seu telefone"
+          handleOnChange={handleChange}
         />
         <Input
           text="Email"
           type="email"
           name="email"
           placeholder="Digite seu email"
+          handleOnChange={handleChange}
         />
         <Input
           text="Senha"
           type="password"
           name="password"
           placeholder="Digite sua senha"
+          handleOnChange={handleChange}
         />
         <Input
           text="Confirmação de senha"
           type="password"
           name="confirmpassword"
           placeholder="Confirme a sua senha"
+          handleOnChange={handleChange}
         />
         <input type="submit" value="Cadastrar" />
       </form>
