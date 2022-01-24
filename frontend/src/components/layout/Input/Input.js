@@ -1,5 +1,6 @@
 import "./Input.css";
 
+
 export default function Input({
   type,
   text,
@@ -10,7 +11,7 @@ export default function Input({
   multiple,
 }) {
   return (
-    <div>
+    <div className="form-control">
       <label htmlFor={name}>{text}:</label>
       <input
         type={type}

@@ -1,0 +1,9 @@
+section p {
+  width: max-content;
+  margin: 0 auto;
+}
+
+section p a {
+  color: #16479D;
+  font-weight: bold;
+}
