@@ -31,6 +31,7 @@ export default function Register() {
           type="text"
           name="name"
           placeholder="Digite seu nome"
+          required={true}
           handleOnChange={handleChange}
         />
         <Input
@@ -38,6 +39,7 @@ export default function Register() {
           type="text"
           name="phone"
           placeholder="Digite o seu telefone"
+          required={true}
           handleOnChange={handleChange}
         />
         <Input
@@ -45,6 +47,7 @@ export default function Register() {
           type="email"
           name="email"
           placeholder="Digite seu email"
+          required={true}
           handleOnChange={handleChange}
         />
         <Input
@@ -52,6 +55,7 @@ export default function Register() {
           type="password"
           name="password"
           placeholder="Digite sua senha"
+          required={true}
           handleOnChange={handleChange}
         />
         <Input
@@ -59,6 +63,7 @@ export default function Register() {
           type="password"
           name="confirmpassword"
           placeholder="Confirme a sua senha"
+          required={true}
           handleOnChange={handleChange}
         />
         <input type="submit" value="Cadastrar" />

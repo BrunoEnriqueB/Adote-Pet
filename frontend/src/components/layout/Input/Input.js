@@ -9,6 +9,7 @@ export default function Input({
   handleOnChange,
   value,
   multiple,
+  required
 }) {
   return (
     <div className="form-control">
@@ -20,6 +21,7 @@ export default function Input({
         placeholder={placeholder}
         onChange={handleOnChange}
         value={value}
+        required={required}
         {...(multiple ? { multiple } : '')}
       />
     </div>
