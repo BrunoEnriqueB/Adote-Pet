@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
 // Componentes
 import Input from "../../../layout/Input/Input";
@@ -8,8 +8,12 @@ import Input from "../../../layout/Input/Input";
 import '../../../layout/Input/Form.css';
 import './Register.css';
 
+//context
+import { Context } from '../../../../context/UserContext';
+
 export default function Register() {
   const [ user, setUser ] = useState({});
+  const { register } = useContext(Context);
 
   function handleChange(e) {
     setUser({...user, [e.target.name]: e.target.value})
@@ -19,7 +23,8 @@ export default function Register() {
     e.preventDefault();
 
     //enviar usuário para o banco
-    console.log(user)
+    const data = register(user);
+
   }
 
   return (
@@ -31,7 +36,6 @@ export default function Register() {
           type="text"
           name="name"
           placeholder="Digite seu nome"
-          required={true}
           handleOnChange={handleChange}
         />
         <Input
@@ -39,7 +43,6 @@ export default function Register() {
           type="text"
           name="phone"
           placeholder="Digite o seu telefone"
-          required={true}
           handleOnChange={handleChange}
         />
         <Input
@@ -47,7 +50,6 @@ export default function Register() {
           type="email"
           name="email"
           placeholder="Digite seu email"
-          required={true}
           handleOnChange={handleChange}
         />
         <Input
@@ -55,7 +57,6 @@ export default function Register() {
           type="password"
           name="password"
           placeholder="Digite sua senha"
-          required={true}
           handleOnChange={handleChange}
         />
         <Input
@@ -63,7 +64,6 @@ export default function Register() {
           type="password"
           name="confirmpassword"
           placeholder="Confirme a sua senha"
-          required={true}
           handleOnChange={handleChange}
         />
         <input type="submit" value="Cadastrar" />
