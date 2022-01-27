@@ -12,7 +12,6 @@ export function useAuth() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("aqui segundo")
     const token = localStorage.getItem('token');
 
     if(token) {
@@ -22,7 +21,6 @@ export function useAuth() {
   }, [])
 
   async function register(user) {
-    console.log("aqui primeiro!")
     let msgText = 'cadastro realizado com sucesso!';
     let msgType = 'sucess';
 
@@ -39,6 +37,24 @@ export function useAuth() {
     setFlashMessage(msgText, msgType);
   }
 
+  async function login(user) {
+    let msgText = 'Logado com sucesso!';
+    let msgType = 'sucess';
+
+    try {
+      const data = await api.post('/user/login', user).then(response => {
+        return response.data;
+      })
+
+      await authUser(data);
+    } catch (error) {
+      msgText = error.response.data.message;
+      msgType = 'error';
+    }
+    setFlashMessage(msgText, msgType);
+
+  }
+
   async function authUser(data) {
       setAuthenticated(true);
 
@@ -47,5 +63,19 @@ export function useAuth() {
       navigate('/');
   }
 
-  return { authenticated ,register };
+  async function logoutUser() {
+    const msgText = 'Logout realizado com sucesso!';
+    const msgType = 'sucess';
+
+    setAuthenticated(false);
+
+    localStorage.removeItem('token');
+    api.defaults.headers.authorization = undefined;
+
+    navigate('/login');
+
+    setFlashMessage(msgText, msgType);
+  }
+
+  return { authenticated, logoutUser, register, login };
 }

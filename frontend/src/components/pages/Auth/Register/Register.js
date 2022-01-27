@@ -9,11 +9,11 @@ import '../../../layout/Input/Form.css';
 import './Register.css';
 
 //context
-import { Context } from '../../../../context/UserContext';
+import { userContext } from '../../../../context/UserContext';
 
 export default function Register() {
   const [ user, setUser ] = useState({});
-  const { register } = useContext(Context);
+  const { register } = userContext;
 
   function handleChange(e) {
     setUser({...user, [e.target.name]: e.target.value})
@@ -37,6 +37,7 @@ export default function Register() {
           name="name"
           placeholder="Digite seu nome"
           handleOnChange={handleChange}
+          required={true}
         />
         <Input
           text="Telefone"
@@ -44,6 +45,7 @@ export default function Register() {
           name="phone"
           placeholder="Digite o seu telefone"
           handleOnChange={handleChange}
+          required={true}
         />
         <Input
           text="Email"
@@ -51,6 +53,7 @@ export default function Register() {
           name="email"
           placeholder="Digite seu email"
           handleOnChange={handleChange}
+          required={true}
         />
         <Input
           text="Senha"
@@ -58,6 +61,7 @@ export default function Register() {
           name="password"
           placeholder="Digite sua senha"
           handleOnChange={handleChange}
+          required={true}
         />
         <Input
           text="Confirmação de senha"
@@ -65,6 +69,7 @@ export default function Register() {
           name="confirmpassword"
           placeholder="Confirme a sua senha"
           handleOnChange={handleChange}
+          required={true}
         />
         <input type="submit" value="Cadastrar" />
       </form>
