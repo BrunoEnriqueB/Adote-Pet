@@ -9,11 +9,11 @@ import '../../../layout/Input/Form.css';
 import './Register.css';
 
 //context
-import { userContext } from '../../../../context/UserContext';
+import { Context } from '../../../../context/UserContext';
 
 export default function Register() {
   const [ user, setUser ] = useState({});
-  const { register } = userContext;
+  const { register } = useContext(Context);
 
   function handleChange(e) {
     setUser({...user, [e.target.name]: e.target.value})

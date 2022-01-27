@@ -3,11 +3,11 @@ import Logo from '../../../assets/img/logo.png';
 import './Navbar.css';
 
 //contexto
-import { userContext } from "../../../context/UserContext";
+import { Context } from "../../../context/UserContext";
 import { useContext } from "react";
 
 export default function Navbar() {
-  const { authenticated, logoutUser } = userContext;
+  const { authenticated, logoutUser } = useContext(Context);
 
   return (
       <nav className="navbar" >
@@ -22,7 +22,7 @@ export default function Navbar() {
         {authenticated ? (
           <>
             <li>
-              <Link to="/login">Meus pets</Link>
+              <Link to="/user/profile">Perfil</Link>
             </li>
             <li>
               <Link to="/" onClick={logoutUser}>Sair</Link>

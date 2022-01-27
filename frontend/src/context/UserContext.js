@@ -2,10 +2,10 @@ import { createContext } from "react";
 import { useAuth } from "../hooks/useAuth";
 
 const Context = createContext();
-const userContext = userContext(Context);
-
 function UserProvider({children}) { //entidade que da o contexto pras outras entidades
   const { register, authenticated, logoutUser, login } = useAuth();
+
+
 
   return (
     <Context.Provider value={{ authenticated, register, logoutUser, login }}>
@@ -14,4 +14,4 @@ function UserProvider({children}) { //entidade que da o contexto pras outras ent
   )
 }
 
-export { userContext, UserProvider }
+export { Context, UserProvider }

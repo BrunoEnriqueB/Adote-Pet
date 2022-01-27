@@ -4,11 +4,11 @@ import Input from "../../../layout/Input/Input";
 import './Login.css';
 
 //contexto
-import { userContext } from "../../../../context/UserContext";
+import { Context } from "../../../../context/UserContext";
 
 export default function Login() {
   const [ user, setUser ] = useState({});
-  const { login } = userContext;
+  const { login } = useContext(Context);
 
   function handleChange(e) {
     setUser({...user, [e.target.name]: e.target.value})
