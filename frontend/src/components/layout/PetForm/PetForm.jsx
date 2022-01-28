@@ -16,7 +16,6 @@ export default function PetForm({handleSubmit, petData, btnText}) {
   }
 
   function handleFileChange(e) {
-    console.log(e.target.files)
     setPreview(Array.from(e.target.files));
     setPet({...pet, [e.target.name]: [...e.target.files]})
   }
@@ -28,7 +27,7 @@ export default function PetForm({handleSubmit, petData, btnText}) {
   function submit(e) {
     e.preventDefault();
 
-    // handleSubmit(pet);
+    handleSubmit(pet);
   }
 
   return (
@@ -38,8 +37,8 @@ export default function PetForm({handleSubmit, petData, btnText}) {
         ? preview.map((image, index) => (
           <img src={URL.createObjectURL(image)} alt={pet.name} key={`${pet.name} + ${index}`} />
         ))
-        : pet.images && 
-          pet.images.map((image, index) => (
+        : pet.image && 
+          pet.image.map((image, index) => (
             <img src={`${process.env.REACT_APP_API}/images/pets/${image}`} alt={pet.name} key={`${pet.name} + ${index}`} />
         ))
         }
@@ -47,7 +46,7 @@ export default function PetForm({handleSubmit, petData, btnText}) {
       <Input
       text="Imagens do Pet"
       type="file"
-      name="images"
+      name="image"
       handleOnChange={handleFileChange}
       multiple={true}
       />
