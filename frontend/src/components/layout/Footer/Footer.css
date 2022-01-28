@@ -1,6 +1,7 @@
 .footer {
-  height: 10vh;
-  width: 100%;
+  height: 100px; 
+	width:100%;
+  justify-self: flex-end;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -16,6 +16,7 @@ export default function Profile() {
   const [ user, setUser ] = useState({});
   const [token] = useState(localStorage.getItem('token') || '');
   const { setFlashMessage } = UseFlashMessage();
+  const [ preview, setPreview ] = useState()
 
   useEffect(() => {
     api.get('/user/checkuser', {
@@ -28,6 +29,7 @@ export default function Profile() {
   }, [token])
 
   function handleFileChange(e) {
+    setPreview(e.target.files[0])
     setUser({...user, [e.target.name]: e.target.files[0]});
   }
 
@@ -68,7 +70,9 @@ export default function Profile() {
     <section>
       <div className='profile_header'>
         <h1>Perfil</h1>
-        <p>Preview Image</p>
+        {(user.image || preview) && (
+          <img src={preview ? URL.createObjectURL(preview) : `${process.env.REACT_APP_API}/images/users/${user.image}`} alt={user.name}/>
+        )}
       </div>   
       <form className='form-container' onSubmit={handleSubmit}>
         <Input
@@ -78,7 +82,7 @@ export default function Profile() {
           handleOnChange={handleFileChange}
         />
           <Input
-            text={"nome"}
+            text={"Nome"}
             type={"text"}
             name={"name"}
             placeholder={"Digite seu nome"}
