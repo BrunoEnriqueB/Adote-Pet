@@ -25,6 +25,9 @@ export default function Navbar() {
               <Link to="/user/profile">Perfil</Link>
             </li>
             <li>
+              <Link to="/user/mypets">Meus pets</Link>
+            </li>
+            <li>
               <Link to="/" onClick={logoutUser}>Sair</Link>
             </li>
           </>

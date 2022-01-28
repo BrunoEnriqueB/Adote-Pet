@@ -6,6 +6,7 @@ import './Profile.css';
 
 //components 
 import Input from '../../layout/Input/Input';
+import Image from '../../layout/Image/Image';
 
 import { api } from '../../../utils/api';
 
@@ -71,7 +72,7 @@ export default function Profile() {
       <div className='profile_header'>
         <h1>Perfil</h1>
         {(user.image || preview) && (
-          <img src={preview ? URL.createObjectURL(preview) : `${process.env.REACT_APP_API}/images/users/${user.image}`} alt={user.name}/>
+          <Image src={preview ? URL.createObjectURL(preview) : `${process.env.REACT_APP_API}/images/users/${user.image}`} alt={user.name}/>
         )}
       </div>   
       <form className='form-container' onSubmit={handleSubmit}>
