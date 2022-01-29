@@ -1,9 +1,9 @@
 import { api } from '../utils/api';
 
-export function getMyPets(token) {
-  return api.get('/pet/mypets', {
+export async function getMyPets(token) {  
+  return await api.get('/pet/mypets', {
     headers: {
-      Authorization: `Bearer ${JSON.parse(token)}` 
+      authorization: `Bearer ${JSON.parse(token)}`
     }
-  }).then((res) => res.data)
+  }).then((res) => res.data.pets)
 }

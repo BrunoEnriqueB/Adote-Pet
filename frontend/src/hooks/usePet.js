@@ -1,16 +1,25 @@
-import { api } from '../utils/api';
+import { createContext, useContext, useState } from 'react';
 
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { UseFlashMessage } from './useFlashMessage';
-import { getMyPets } from '../services/getPets';
 
-export function usePet() {
+import 
+{ useNavigate } from 'react-router-dom';
+
+import 
+{ api } from '../utils/api';
+
+//services
+import { getMyPets } from '../services/getPets';
+import { deleteMyPet } from '../services/deleteMyPet'
+
+export const PetsContext = createContext({});
+
+function PetsProvider({ children }) {
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
   const { setFlashMessage } = UseFlashMessage();
   const [ allPets, setAllPets ] = useState([]);
-  const [ teste, setTeste ] = useState('')
+
 
   async function registerPet(pet) {
     let msgType = 'sucess';
@@ -45,20 +54,44 @@ export function usePet() {
   }
 
   async function loadPets() {
-    try { 
-      const pets = await getMyPets(token);
-      if(pets) {
-        console.log("if:", pets)
-        setTeste('pets')
-        setAllPets(...allPets, pets);
-        
-      }
-      console.log("setAllPets:", allPets)
+    const pets = await getMyPets(token);
+    try {
+      setAllPets(pets);
+    } catch (error) {
+      console.log(error)
+    }
+    
+  }
+
+  async function deletePet(id) {
+    try {
+      const msgText = await deleteMyPet(id, token);
+      console.log("msg", msgText)
+      const updatedPets = allPets.filter((pet) => pet._id !== id);
+      setAllPets(updatedPets);
     } catch (error) {
       console.log(error);
     }
     
+    
   }
-  
-  return { registerPet, loadPets, allPets };
+
+  return (
+    <PetsContext.Provider value={{
+      registerPet, loadPets, allPets, deletePet
+    }}>
+      {children}
+    </PetsContext.Provider>
+  )
+}
+
+function usePets() {
+  const context = useContext(PetsContext);
+
+  return context;
+}
+
+export {
+  PetsProvider,
+  usePets
 }

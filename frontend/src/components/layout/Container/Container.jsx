@@ -11,7 +11,7 @@ import AddPet from '../../pages/Pet/AddPet/AddPet';
 
 //contexto
 // import { PetProvider } from '../../../context/PetContext';
-import { PetsProvider } from '../../../hooks/usePetR';
+import { PetsProvider } from '../../../hooks/usePet';
 
 //css
 import './Container.css';

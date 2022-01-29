@@ -1,17 +1,14 @@
 import './AddPet.css';
-import { api } from '../../../../utils/api';
-
 
 // hooks
-import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Context } from '../../../../context/PetContext';
+import { usePets } from '../../../../hooks/usePet';
 
 // componentes
 import PetForm from '../../../layout/PetForm/PetForm'
 
 export default function AddPet() {
-  const { registerPet } = useContext(Context);
+  const { registerPet } = usePets();
   const navigate = useNavigate();
 
   async function handleSubmit(pet) {
