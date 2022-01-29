@@ -23,7 +23,7 @@ export default function Register() {
     e.preventDefault();
 
     //enviar usuário para o banco
-    const data = register(user);
+    register(user);
 
   }
 

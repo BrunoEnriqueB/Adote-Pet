@@ -1,7 +1,6 @@
 import './AddPet.css';
 
 // hooks
-import { useNavigate } from 'react-router-dom';
 import { usePets } from '../../../../hooks/usePet';
 
 // componentes
@@ -9,7 +8,6 @@ import PetForm from '../../../layout/PetForm/PetForm'
 
 export default function AddPet() {
   const { registerPet } = usePets();
-  const navigate = useNavigate();
 
   async function handleSubmit(pet) {
     registerPet(pet);

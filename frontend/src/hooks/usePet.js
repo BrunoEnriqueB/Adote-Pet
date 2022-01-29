@@ -10,7 +10,8 @@ import
 
 //services
 import { getMyPets } from '../services/getPets';
-import { deleteMyPet } from '../services/deleteMyPet'
+import { deleteMyPet } from '../services/deleteMyPet';
+import { getMyPetById } from '../services/getMyPetById';
 
 export const PetsContext = createContext();
 
@@ -79,13 +80,21 @@ function PetsProvider({ children }) {
     }
   }
 
+  async function getPetById(id) {
+    try {
+      return await getMyPetById(id);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   if(loading) {
     return <></>
   }
 
   return (
     <PetsContext.Provider value={{
-      registerPet, loadPets, allPets, deletePet
+      registerPet, loadPets, allPets, deletePet, getPetById
     }}>
       {children}
     </PetsContext.Provider>

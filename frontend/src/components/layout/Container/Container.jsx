@@ -8,6 +8,7 @@ import Profile from '../../pages/Profile/Profile';
 import PageNotFound from '../../pages/404/404';
 import MyPets from '../../pages/Pet/MyPet/MyPets';
 import AddPet from '../../pages/Pet/AddPet/AddPet';
+import EditPet from '../../pages/Pet/EditPet/EditPet';
 
 //contexto
 // import { PetProvider } from '../../../context/PetContext';
@@ -16,6 +17,7 @@ import { PetsProvider } from '../../../hooks/usePet';
 //css
 import './Container.css';
 
+  
 export default function Container() {
   return (
     <main className="container">
@@ -25,6 +27,7 @@ export default function Container() {
           <Route path="/user/profile" element={<Profile />}/>
           <Route path="/user/mypets" element={<PetsProvider><MyPets/></PetsProvider> } />
           <Route path="/pet/addpet" element={<PetsProvider><AddPet /></PetsProvider> } />
+          <Route path="/pet/edit/:id" element={<PetsProvider><EditPet /></PetsProvider> } />
           <Route path="/" element={<Home />}/>
           <Route path="*" element={<PageNotFound/>} />
         </Routes>

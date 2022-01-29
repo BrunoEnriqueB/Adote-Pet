@@ -12,6 +12,7 @@ function UserProvider({children}) {
   const { setFlashMessage } = UseFlashMessage();
   const [ authenticated, setAuthenticated ] = useState(false);
   const navigate = useNavigate();
+  const [ loading, setLoading ] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -19,7 +20,11 @@ function UserProvider({children}) {
     if(token) {
       api.defaults.headers.authorization = `Bearer ${JSON.parse(token)}`;
       setAuthenticated(true);
+
+      setLoading(false);
     }
+
+
   }, [])
 
   async function register(user) {
@@ -79,8 +84,12 @@ function UserProvider({children}) {
     setFlashMessage(msgText, msgType);
   }
 
+  if(loading) {
+    return <></>
+  }
+
   return (
-    <UserContext.Provider value={register, login, authUser, logoutUser}>
+    <UserContext.Provider value={{register, login, authUser, logoutUser, authenticated}}>
       {children}
     </UserContext.Provider>
   )
