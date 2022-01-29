@@ -1,6 +1,6 @@
 import { BrowserRouter as Router } from 'react-router-dom';
 // Context
-import { UserProvider } from './context/UserContext';
+import { UserProvider } from './hooks/useAuth';
 // componentes
 import Footer from './components/layout/Footer/Footer';
 import Navbar from './components/layout/Navbar/Navbar';

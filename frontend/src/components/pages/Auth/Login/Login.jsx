@@ -1,14 +1,15 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Input from "../../../layout/Input/Input";
 import './Login.css';
 
+
 //contexto
-import { Context } from "../../../../context/UserContext";
+import { useAuth } from "../../../../hooks/useAuth";
 
 export default function Login() {
   const [ user, setUser ] = useState({});
-  const { login } = useContext(Context);
+  const { login } = useAuth();
 
   function handleChange(e) {
     setUser({...user, [e.target.name]: e.target.value})

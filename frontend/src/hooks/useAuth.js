@@ -2,11 +2,13 @@
 
 //api
 import { api } from "../utils/api";
-import { useState, useEffect } from "react";
+import { useState, useEffect, createContext, useContext } from "react";
 import { useNavigate } from "react-router-dom"; //esse hook serve pra manipular as urls que o usuário acessa
 import { UseFlashMessage } from './useFlashMessage';
 
-export function useAuth() {
+export const UserContext = createContext();
+
+function UserProvider({children}) {
   const { setFlashMessage } = UseFlashMessage();
   const [ authenticated, setAuthenticated ] = useState(false);
   const navigate = useNavigate();
@@ -77,5 +79,20 @@ export function useAuth() {
     setFlashMessage(msgText, msgType);
   }
 
-  return { authenticated, logoutUser, register, login };
+  return (
+    <UserContext.Provider value={register, login, authUser, logoutUser}>
+      {children}
+    </UserContext.Provider>
+  )
+}
+
+function useAuth() {
+  const context = useContext(UserContext);
+
+  return context;
+}
+
+export {
+  UserProvider,
+  useAuth
 }

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 
 // Componentes
 import Input from "../../../layout/Input/Input";
@@ -9,11 +9,11 @@ import '../../../layout/Input/Form.css';
 import './Register.css';
 
 //context
-import { Context } from '../../../../context/UserContext';
+import { useAuth } from '../../../../hooks/useAuth';
 
 export default function Register() {
   const [ user, setUser ] = useState({});
-  const { register } = useContext(Context);
+  const { register } = useAuth();
 
   function handleChange(e) {
     setUser({...user, [e.target.name]: e.target.value})

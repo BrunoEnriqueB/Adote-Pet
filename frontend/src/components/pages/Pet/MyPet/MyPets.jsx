@@ -18,9 +18,8 @@ export default function MyPets() {
 
   useEffect(() => {
     loadPets();
-  });
+  }, []);
 
-  
   return (
     <section>
       <div className='petlist_header'>

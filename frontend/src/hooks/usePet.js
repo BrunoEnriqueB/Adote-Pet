@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 
 import { UseFlashMessage } from './useFlashMessage';
 
@@ -12,18 +12,25 @@ import
 import { getMyPets } from '../services/getPets';
 import { deleteMyPet } from '../services/deleteMyPet'
 
-export const PetsContext = createContext({});
+export const PetsContext = createContext();
 
 function PetsProvider({ children }) {
   const navigate = useNavigate();
-  const token = localStorage.getItem('token');
   const { setFlashMessage } = UseFlashMessage();
   const [ allPets, setAllPets ] = useState([]);
+  const [ loading, setLoading ] = useState(true);
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if(token) {
+      api.defaults.headers.authorization = `Bearer ${JSON.parse(token)}`;
+    }
+    setLoading(false)
+  }, [])
 
   async function registerPet(pet) {
     let msgType = 'sucess';
-    
 
     const formData = new FormData();
     await Object.keys(pet).forEach((key) => {
@@ -37,7 +44,6 @@ function PetsProvider({ children }) {
     })
 
     const data = await api.post('/pet/create', formData, {
-      Authorization: `Bearer ${JSON.parse(token)}`,
       'Content-Type': 'multipart/form-data'
     }).then((response) => {
       return response.data;
@@ -54,7 +60,7 @@ function PetsProvider({ children }) {
   }
 
   async function loadPets() {
-    const pets = await getMyPets(token);
+    const pets = await getMyPets();
     try {
       setAllPets(pets);
     } catch (error) {
@@ -65,15 +71,16 @@ function PetsProvider({ children }) {
 
   async function deletePet(id) {
     try {
-      const msgText = await deleteMyPet(id, token);
-      console.log("msg", msgText)
+      await deleteMyPet(id);
       const updatedPets = allPets.filter((pet) => pet._id !== id);
       setAllPets(updatedPets);
     } catch (error) {
       console.log(error);
     }
-    
-    
+  }
+
+  if(loading) {
+    return <></>
   }
 
   return (

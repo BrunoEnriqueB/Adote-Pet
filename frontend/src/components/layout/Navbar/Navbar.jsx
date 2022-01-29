@@ -3,11 +3,10 @@ import Logo from '../../../assets/img/logo.png';
 import './Navbar.css';
 
 //contexto
-import { Context } from "../../../context/UserContext";
-import { useContext } from "react";
+import { useAuth } from "../../../hooks/useAuth";
 
 export default function Navbar() {
-  const { authenticated, logoutUser } = useContext(Context);
+  const { authenticated, logoutUser } = useAuth();
 
   return (
       <nav className="navbar" >
