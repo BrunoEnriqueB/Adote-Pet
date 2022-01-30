@@ -16,6 +16,7 @@ import { editPetById } from '../services/editPetById';
 import { getAllPets } from '../services/getAllPets';
 import { schedule } from '../services/schedule';
 import { getMyPetsAdopted } from '../services/getMyPetsAdopted';
+import { concludeAdoption } from '../services/concludeAdoption';
 
 export const PetsContext = createContext();
 
@@ -114,13 +115,18 @@ function PetsProvider({ children }) {
     setMyAdoptedPets(await getMyPetsAdopted());
   }
 
+  async function concludeAdoptionById(id) {
+    await concludeAdoption(id);
+    loadPets();
+  }
+
   if(loading) {
     return <></>
   }
 
   return (
     <PetsContext.Provider value={{
-      registerPet, loadPets, allPets, deletePet, getPetById, editMyPet, loadAllPets, schedulePet, getMyAdoptedPets, myAdoptedPets
+      registerPet, loadPets, allPets, deletePet, getPetById, editMyPet, loadAllPets, schedulePet, getMyAdoptedPets, myAdoptedPets, concludeAdoptionById
     }}>
       {children}
     </PetsContext.Provider>

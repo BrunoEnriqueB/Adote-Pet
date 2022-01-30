@@ -10,15 +10,19 @@ import Image from '../../../layout/Image/Image';
 import { usePets } from '../../../../hooks/usePet';
 
 export default function MyPets() {
-  const { loadPets, allPets, deletePet } = usePets();
+  const { loadPets, allPets, deletePet, concludeAdoptionById } = usePets();
 
-  function handleDeletePet(id) {
-    deletePet(id);
+  async function concludeAdoption(id) {
+    await concludeAdoptionById(id);
+  }
+
+  async function handleDeletePet(id) {
+    await deletePet(id);
   }
 
   useEffect(() => {
     loadPets();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [allPets.available]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <section>
@@ -40,7 +44,9 @@ export default function MyPets() {
                 {pet.available ? (
                   <>
                     {pet.adopter && (
-                      <button className='conclude_btn'>Concluir adoção</button>
+                      <button onClick={() => {
+                        concludeAdoption(pet._id);
+                      }} className='conclude_btn'>Concluir adoção</button>
                     )}
                     <Link to={`/pet/edit/${pet._id}`}>Editar</Link>
                     <button onClick={() => {
@@ -48,7 +54,9 @@ export default function MyPets() {
                     }}>Excluir</button>
                   </>
                 ) : (
-                  <p>Pet já adotado</p>
+                  <span className="bold">
+                    <p>Pet já adotado</p>
+                  </span>
                 )}
               </div>
             </div>
