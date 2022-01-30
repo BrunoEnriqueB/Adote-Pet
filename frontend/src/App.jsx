@@ -1,6 +1,7 @@
 import { BrowserRouter as Router } from 'react-router-dom';
 // Context
 import { UserProvider } from './hooks/useAuth';
+import { PetsProvider } from '../../../hooks/usePet';
 // componentes
 import Footer from './components/layout/Footer/Footer';
 import Navbar from './components/layout/Navbar/Navbar';
@@ -13,7 +14,9 @@ export default function App() {
       <UserProvider>
         <Navbar />
         <Message/>
-        <Container />
+        <PetsProvider>
+          <Container />
+        </PetsProvider>
         <Footer />
       </UserProvider>
     </Router>

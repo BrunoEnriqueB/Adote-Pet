@@ -10,10 +10,6 @@ import MyPets from '../../pages/Pet/MyPet/MyPets';
 import AddPet from '../../pages/Pet/AddPet/AddPet';
 import EditPet from '../../pages/Pet/EditPet/EditPet';
 
-//contexto
-// import { PetProvider } from '../../../context/PetContext';
-import { PetsProvider } from '../../../hooks/usePet';
-
 //css
 import './Container.css';
 
@@ -25,9 +21,9 @@ export default function Container() {
           <Route path="/login" element={<Login />}/>
           <Route path="/register" element={<Register />}/>
           <Route path="/user/profile" element={<Profile />}/>
-          <Route path="/user/mypets" element={<PetsProvider><MyPets/></PetsProvider> } />
-          <Route path="/pet/addpet" element={<PetsProvider><AddPet /></PetsProvider> } />
-          <Route path="/pet/edit/:id" element={<PetsProvider><EditPet /></PetsProvider> } />
+          <Route path="/user/mypets" element={<MyPets/> } />
+          <Route path="/pet/addpet" element={<AddPet /> } />
+          <Route path="/pet/edit/:id" element={<EditPet /> } />
           <Route path="/" element={<Home />}/>
           <Route path="*" element={<PageNotFound/>} />
         </Routes>
