@@ -11,8 +11,11 @@ export default function Navbar() {
   return (
       <nav className="navbar" >
       <div className="navbar-logo">
-        <img src={Logo} alt="Get A Pet" />
-        <h2>Get A Pet</h2>
+        <Link to="/">
+          <img src={Logo} alt="Get A Pet" />
+          <h2>Get A Pet</h2>
+        </Link>
+        
       </div>
       <ul>
         <li>
