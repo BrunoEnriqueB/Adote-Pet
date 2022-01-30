@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import '../Input/Form.css';
 import Input from '../Input/Input';
@@ -9,7 +9,7 @@ import './PetForm.css';
 export default function PetForm({handleSubmit, petData, btnText}) {
   const [ pet, setPet ] = useState(petData || {});
   const [ preview, setPreview ] = useState([])
-  const colors = ["Branco", "Preto", "Cinza", "Caramelo", "Mesclado"]
+  const colors = ["Branco", "Preto", "Cinza", "Caramelo", "Mesclado"];
 
   function handleColor(e) {
     setPet({...pet, [e.target.name]: e.target.options[e.target.selectedIndex].text})
@@ -17,11 +17,12 @@ export default function PetForm({handleSubmit, petData, btnText}) {
 
   function handleFileChange(e) {
     setPreview(Array.from(e.target.files));
-    setPet({...pet, [e.target.name]: [...e.target.files]})
+    setPet({...pet, image: [...e.target.files]});
+
   }
 
   function handleChange(e) {
-    setPet({...pet, [e.target.name]: e.target.value})
+    setPet({...pet, [e.target.name]: e.target.value});
   }
 
   function submit(e) {
@@ -35,11 +36,17 @@ export default function PetForm({handleSubmit, petData, btnText}) {
       <div className='image-container'>
         {preview.length > 0
         ? preview.map((image, index) => (
-          <img src={URL.createObjectURL(image)} alt={pet.name} key={`${pet.name} + ${index}`} />
+          <img 
+          src={URL.createObjectURL(image)} 
+          alt={pet.name} 
+          key={`${pet.name} + ${index}`} />
         ))
         : pet.image && 
           pet.image.map((image, index) => (
-            <img src={`${process.env.REACT_APP_API}/images/pets/${image}`} alt={pet.name} key={`${pet.name} + ${index}`} />
+            <img 
+            src={`${process.env.REACT_APP_API}/images/pets/${image}`} 
+            alt={pet.name} 
+            key={`${pet.name} + ${index}`} />
         ))
         }
       </div>

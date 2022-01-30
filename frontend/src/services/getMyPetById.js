@@ -7,7 +7,7 @@ export async function getMyPetById(id) {
   return await api.get(`/pet/${id}`).then((res) => {
     return res.data;
   }).catch((err) => {
-    setFlashMessage(err.data.message, 'error');
-    return err.data.message;
+    setFlashMessage(err.response.data.message, 'error');
+    return err.response.data;
   })
 }

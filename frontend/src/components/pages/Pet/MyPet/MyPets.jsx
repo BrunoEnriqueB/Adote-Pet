@@ -31,7 +31,7 @@ export default function MyPets() {
           allPets.map((pet) => (
             <div key={pet._id} className='petlist_row'>
               <Image
-              src={`${process.env.REACT_APP_API}/images/pets/${pet.images[0]}`}
+              src={`${process.env.REACT_APP_API}/images/pets/${pet.image[0]}`}
               all={pet.name}
               width="px75"
               />
