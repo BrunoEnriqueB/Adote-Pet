@@ -205,6 +205,7 @@ module.exports = class PetController {
       if(user._id.toString() === pet.adopter._id.toString()) {
         return res.status(422).json({message: "Você já agendou uma visita para este pet!"});
       }
+      return res.status(422).json({message: "Outra pessoa já agendou uma visita para este pet!"});
     }
 
     // add user to pet 
