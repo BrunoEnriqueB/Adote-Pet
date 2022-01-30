@@ -161,14 +161,12 @@ module.exports = class PetController {
     if(!weight) {
       return res.status(422).json({message: "informe o peso do pet!"});  
     }
-    updatedData.weight = age;
+    updatedData.weight = weight;
     if(!color) {
       return res.status(422).json({message: "informe a cor do pet!"});  
     }
     updatedData.color = color;
-    if(image.length === 0) {
-      return res.status(422).json({message: "as imagens do pet são obrigatórias!"});  
-    } else {
+    if(image.length > 0) {
       updatedData.image = [];
       image.map((image) => {
         updatedData.image.push(image.filename);
