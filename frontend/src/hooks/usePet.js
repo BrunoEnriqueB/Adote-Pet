@@ -14,6 +14,7 @@ import { deleteMyPet } from '../services/deleteMyPet';
 import { getMyPetById } from '../services/getMyPetById';
 import { editPetById } from '../services/editPetById';
 import { getAllPets } from '../services/getAllPets';
+import { schedule } from '../services/schedule';
 
 export const PetsContext = createContext();
 
@@ -22,15 +23,15 @@ function PetsProvider({ children }) {
   const { setFlashMessage } = UseFlashMessage();
   const [ allPets, setAllPets ] = useState([]);
   const [ loading, setLoading ] = useState(true);
+  const token = localStorage.getItem('token') || '';
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-
+    
     if(token) {
       api.defaults.headers.authorization = `Bearer ${JSON.parse(token)}`;
     }
     setLoading(false)
-  }, [])
+  }, [token])
 
   async function registerPet(pet) {
     let msgType = 'sucess';
@@ -103,13 +104,17 @@ function PetsProvider({ children }) {
     }
   }
 
+  async function schedulePet(id) {
+    await schedule(id);
+  }
+
   if(loading) {
     return <></>
   }
 
   return (
     <PetsContext.Provider value={{
-      registerPet, loadPets, allPets, deletePet, getPetById, editMyPet, loadAllPets
+      registerPet, loadPets, allPets, deletePet, getPetById, editMyPet, loadAllPets, schedulePet
     }}>
       {children}
     </PetsContext.Provider>

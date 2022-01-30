@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import './Home.css';
 
 import { usePets } from '../../hooks/usePet';
@@ -9,12 +9,11 @@ export default function Home() {
 
   async function handleLoadPets() {
     await loadAllPets();
-    console.log(allPets)
   }
 
   useEffect(() => {
     handleLoadPets();
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <section>
