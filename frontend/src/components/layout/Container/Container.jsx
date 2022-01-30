@@ -10,6 +10,7 @@ import MyPets from '../../pages/Pet/MyPet/MyPets';
 import AddPet from '../../pages/Pet/AddPet/AddPet';
 import EditPet from '../../pages/Pet/EditPet/EditPet';
 import PetPage from '../../pages/Pet/PetPage/PetPage'; 
+import MyAdoptions from '../../pages/Pet/MyAdoptions/MyAdoptions';
 
 //css
 import './Container.css';
@@ -25,6 +26,7 @@ export default function Container() {
           <Route path="/user/mypets" element={<MyPets/> } />
           <Route path="/pet/addpet" element={<AddPet /> } />
           <Route path="/pet/edit/:id" element={<EditPet /> } />
+          <Route path="/pet/myadoptions" element={<MyAdoptions />} />
           <Route path="/pet/:id" element={<PetPage />} />
           <Route path="/" element={<Home />}/>
           <Route path="*" element={<PageNotFound/>} />

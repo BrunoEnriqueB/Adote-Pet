@@ -21,15 +21,16 @@ export default function Home() {
         <h1>Adote um pet</h1>
         <p>Veja os detalhes de cada um e conheça o tutor deles</p>
       </div>
-      <div className='pet_container'>
+      <div className='pet_container' >
         {allPets.length > 0 && (
           allPets.map((pet) => (
-            <div className='pet_card'>
+            <div className='pet_card' key={pet.image[0]}>
               <div 
               className='image' 
               style={
                 {backgroundImage: 
                   `url(${process.env.REACT_APP_API}/images/pets/${pet.image[0]})`}}
+              key={pet.image[0]}
               />
               <h3>{pet.name}</h3>
               <p>

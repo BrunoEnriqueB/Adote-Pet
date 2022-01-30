@@ -99,3 +99,11 @@
   color: #fff;
   background-color: #16479d;
 }
+
+.contacts {
+  margin-left: -3em;
+}
+
+.contacts p {
+  margin-bottom: .3em;
+}

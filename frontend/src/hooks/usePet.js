@@ -15,6 +15,7 @@ import { getMyPetById } from '../services/getMyPetById';
 import { editPetById } from '../services/editPetById';
 import { getAllPets } from '../services/getAllPets';
 import { schedule } from '../services/schedule';
+import { getMyPetsAdopted } from '../services/getMyPetsAdopted';
 
 export const PetsContext = createContext();
 
@@ -24,6 +25,7 @@ function PetsProvider({ children }) {
   const [ allPets, setAllPets ] = useState([]);
   const [ loading, setLoading ] = useState(true);
   const token = localStorage.getItem('token') || '';
+  const [ myAdoptedPets, setMyAdoptedPets ] = useState([]);
 
   useEffect(() => {
     
@@ -108,13 +110,17 @@ function PetsProvider({ children }) {
     await schedule(id);
   }
 
+  async function getMyAdoptedPets() {
+    setMyAdoptedPets(await getMyPetsAdopted());
+  }
+
   if(loading) {
     return <></>
   }
 
   return (
     <PetsContext.Provider value={{
-      registerPet, loadPets, allPets, deletePet, getPetById, editMyPet, loadAllPets, schedulePet
+      registerPet, loadPets, allPets, deletePet, getPetById, editMyPet, loadAllPets, schedulePet, getMyAdoptedPets, myAdoptedPets
     }}>
       {children}
     </PetsContext.Provider>
