@@ -39,7 +39,7 @@ module.exports = class PetController {
       weight, 
       color, 
       available, 
-      images: [], 
+      image: [], 
       user: {
           _id: user.id,
           name: user.name,
@@ -49,7 +49,7 @@ module.exports = class PetController {
     });
 
     images.map((image) => {
-      pet.images.push(image.filename);
+      pet.image.push(image.filename);
     })  
     
     try {
