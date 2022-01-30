@@ -13,6 +13,7 @@ import { getMyPets } from '../services/getPets';
 import { deleteMyPet } from '../services/deleteMyPet';
 import { getMyPetById } from '../services/getMyPetById';
 import { editPetById } from '../services/editPetById';
+import { getAllPets } from '../services/getAllPets';
 
 export const PetsContext = createContext();
 
@@ -93,13 +94,22 @@ function PetsProvider({ children }) {
     await editPetById(pet);    
   }
 
+  async function loadAllPets() {
+    const pets = await getAllPets();
+    try {
+      setAllPets(pets);
+    } catch (error) { 
+      console.log(error);
+    }
+  }
+
   if(loading) {
     return <></>
   }
 
   return (
     <PetsContext.Provider value={{
-      registerPet, loadPets, allPets, deletePet, getPetById, editMyPet
+      registerPet, loadPets, allPets, deletePet, getPetById, editMyPet, loadAllPets
     }}>
       {children}
     </PetsContext.Provider>
