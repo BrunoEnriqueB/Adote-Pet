@@ -18,7 +18,7 @@ export default function MyPets() {
 
   useEffect(() => {
     loadPets();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <section>
